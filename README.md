@@ -45,9 +45,9 @@ The setup requires you to have an MKV file.
 
 It also requires your video to have 3 audio tracks.
 
-1 - combined voice and background audio
-2 - background only audio
-3 - voice only audio
+1) combined voice and background audio
+2) background only audio
+3) voice only audio
 
 These can easily be setup in OBS (or simular) with advanced audio tracks.
 
