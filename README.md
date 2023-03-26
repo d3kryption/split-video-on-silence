@@ -96,21 +96,20 @@ These can easily be setup in OBS (or simular) with advanced audio tracks.
     ```
 11) Then modify the function `split_on_silence` (around line 164)
 12) Change the return from:
-    ```python
-    return [
-        [audio_segment[ max(start,0) : min(end,len(audio_segment)) ]]
-        for start,end in output_ranges
-    ]
-    ```
+```python
+return [
+    [audio_segment[ max(start,0) : min(end,len(audio_segment)) ]]
+    for start,end in output_ranges
+]
+```
     
    to:
-    ```python
-    
+```python
     return [
         [audio_segment[ max(start,0) : min(end,len(audio_segment)) ],audioType]
         for start,end,audioType in output_ranges
     ]
-    ```
+```
 13) Run main.py via the terminal:
     ```bash
         python main.py
