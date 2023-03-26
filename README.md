@@ -62,58 +62,58 @@ These can easily be setup in OBS (or simular) with advanced audio tracks.
 6) Open up: `./venv/lib/python3.10/site-packages/pydub/silence.py`
 7) Modify the function `detect_nonsilent` (around line 100)
 8) Change the for loop from:
-```python
-   for start_i, end_i in silent_ranges:
-       nonsilent_ranges.append([prev_end_i, start_i])
-       prev_end_i = end_i
-```
+    ```python
+       for start_i, end_i in silent_ranges:
+           nonsilent_ranges.append([prev_end_i, start_i])
+           prev_end_i = end_i
+    ```
 
-   to:
-```python
-   for start_i, end_i in silent_ranges:
-       if (len(nonsilent_ranges) > 0):
-           nonsilent_ranges.append([prev_end_i, start_i, "voice"])
-  
-       nonsilent_ranges.append([start_i, end_i, "silence"]) # add in the silences
-  
-       prev_end_i = end_i
-```
+to:
+    ```python
+       for start_i, end_i in silent_ranges:
+           if (len(nonsilent_ranges) > 0):
+               nonsilent_ranges.append([prev_end_i, start_i, "voice"])
+      
+           nonsilent_ranges.append([start_i, end_i, "silence"]) # add in the silences
+      
+           prev_end_i = end_i
+    ```
    
 9) Modify the function `split_on_silence` (around line 116)
 10) Change the output_ranges assigning from:
-```python
-output_ranges = [
-    [ start - keep_silence, end + keep_silence ]
-    for (start,end)
-        in detect_nonsilent(audio_segment, min_silence_len, silence_thresh, seek_step)
-]
-```
+    ```python
+    output_ranges = [
+        [ start - keep_silence, end + keep_silence ]
+        for (start,end)
+            in detect_nonsilent(audio_segment, min_silence_len, silence_thresh, seek_step)
+    ]
+    ```
 
-   to:
-```python
-output_ranges = [
-    [ start - keep_silence, end + keep_silence,audioType ]
-    for (start,end,audioType)
-        in detect_nonsilent(audio_segment, min_silence_len, silence_thresh, seek_step)
-]
-```
+to:
+    ```python
+    output_ranges = [
+        [ start - keep_silence, end + keep_silence,audioType ]
+        for (start,end,audioType)
+            in detect_nonsilent(audio_segment, min_silence_len, silence_thresh, seek_step)
+    ]
+    ```
 
 11) Then modify the function `split_on_silence` (around line 164)
 12) Change the return from:
-```python
-return [
-    [audio_segment[ max(start,0) : min(end,len(audio_segment)) ]]
-    for start,end in output_ranges
-]
-```
+    ```python
+    return [
+        [audio_segment[ max(start,0) : min(end,len(audio_segment)) ]]
+        for start,end in output_ranges
+    ]
+    ```
     
    to:
-```python
-    return [
-        [audio_segment[ max(start,0) : min(end,len(audio_segment)) ],audioType]
-        for start,end,audioType in output_ranges
-    ]
-```
+    ```python
+        return [
+            [audio_segment[ max(start,0) : min(end,len(audio_segment)) ],audioType]
+            for start,end,audioType in output_ranges
+        ]
+    ```
 13) Run main.py via the terminal:
     ```bash
         python main.py
