@@ -105,10 +105,10 @@ These can easily be setup in OBS (or simular) with advanced audio tracks.
     
    to:
     ```python
-        return [
-            [audio_segment[ max(start,0) : min(end,len(audio_segment)) ],audioType]
-            for start,end,audioType in output_ranges
-        ]
+    return [
+        [audio_segment[ max(start,0) : min(end,len(audio_segment)) ],audioType]
+        for start,end,audioType in output_ranges
+    ]
     ```
 13) Run main.py via the terminal:
     ```bash
