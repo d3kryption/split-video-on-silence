@@ -67,9 +67,7 @@ These can easily be setup in OBS (or simular) with advanced audio tracks.
            nonsilent_ranges.append([prev_end_i, start_i])
            prev_end_i = end_i
     ```
-
-to:
-
+9) to:
     ```python
        for start_i, end_i in silent_ranges:
            if (len(nonsilent_ranges) > 0):
@@ -80,8 +78,8 @@ to:
            prev_end_i = end_i
     ```
    
-9) Modify the function `split_on_silence` (around line 116)
-10) Change the output_ranges assigning from:
+10) Modify the function `split_on_silence` (around line 116)
+11) Change the output_ranges assigning from:
     ```python
     output_ranges = [
         [ start - keep_silence, end + keep_silence ]
@@ -89,8 +87,7 @@ to:
             in detect_nonsilent(audio_segment, min_silence_len, silence_thresh, seek_step)
     ]
     ```
-
-to:
+12) to:
 
     ```python
     output_ranges = [
@@ -100,8 +97,8 @@ to:
     ]
     ```
 
-11) Then modify the function `split_on_silence` (around line 164)
-12) Change the return from:
+13) Then modify the function `split_on_silence` (around line 164)
+14) Change the return from:
     ```python
     return [
         [audio_segment[ max(start,0) : min(end,len(audio_segment)) ]]
@@ -109,7 +106,7 @@ to:
     ]
     ```
     
-   to:
+15) to:
 
     ```python
         return [
@@ -117,7 +114,7 @@ to:
             for start,end,audioType in output_ranges
         ]
     ```
-13) Run main.py via the terminal:
+16) Run main.py via the terminal:
     ```bash
         python main.py
     ```
